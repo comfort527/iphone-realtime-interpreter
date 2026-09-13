@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-pages/
+.env
+.env.*
+!.env.example
+test-results/
