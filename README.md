@@ -31,6 +31,8 @@ pnpm start
 
 ## Mock 驗收
 
+主畫面僅保留狀態、雙向字幕與開始／停止。點上方「設定」可調整語言、引擎和輸出；下方「試用範例」提供雙向 Mock 按鈕，「更多測試」提供低信心、路由中斷和無聲耳機模擬。
+
 1. 保持 Mock 與「純展示」勾選，按「開始口譯」。不需要麥克風也能跑完整事件流。
 2. 勾選「模擬耳機播放生命週期（全程無聲）」，按「對方說外語」：`LISTENING → PROCESSING → AIRPODS_PLAYING → LISTENING`，同步顯示原文／繁中。模擬使用全零 PCM 的真實 Web Audio 播放生命週期，不是私人語音。
 3. 將系統音訊輸出切到手機喇叭，勾選公開輸出，按「我說中文」：`PROCESSING → SPEAKER_PLAYING → COOLDOWN → LISTENING`。Mock 使用系統 TTS，依選定外語發音；沒有可用 TTS 或權限時明確顯示 ERROR。

@@ -3,6 +3,7 @@ import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
 import assert from 'node:assert/strict';
+import { mkdir } from 'node:fs/promises';
 const base = '/iphone-realtime-interpreter/';
 const server = http.createServer(async (req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
@@ -23,6 +24,10 @@ try {
   const page = await context.newPage(); const errors = []; page.on('pageerror', e => errors.push(e.message));
   const failed = []; page.on('response', r => { if (r.status() >= 400) failed.push(r.url()); });
   await page.goto(`http://localhost:5175${base}`);
+  await mkdir('test-results', { recursive: true });
+  await page.screenshot({ path: 'test-results/ui-simplified.png', fullPage: true });
+  await page.locator('#settingsPanel > summary').click();
+  await page.locator('#mockPanel > summary').click();
   assert.equal(await page.locator('#provider option[value="openai"]').evaluate(e => e.disabled), true);
   const manifest = await page.evaluate(async () => await (await fetch(document.querySelector('link[rel="manifest"]').href)).json());
   assert.equal(manifest.start_url, './');
@@ -32,6 +37,7 @@ try {
   await page.locator('#stop').click();
   await page.evaluate(async () => { await navigator.serviceWorker.ready; });
   await page.reload(); await context.setOffline(true); await page.reload();
+  await page.locator('#mockPanel > summary').click();
   await page.locator('#start').click(); await page.locator('#stateCode').filter({ hasText: /^LISTENING$/ }).waitFor();
   await page.locator('#demoForeign').click(); await page.locator('#chineseTranslation').filter({ hasText: /明天/ }).waitFor();
   assert.deepEqual(errors, []); assert.deepEqual(failed, []);

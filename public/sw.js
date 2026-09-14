@@ -1,6 +1,6 @@
 const BASE = new URL('./', self.location.href).pathname;
 const PREFIX = `interpreter-shell-${BASE}-`;
-const CACHE = `${PREFIX}v2`;
+const CACHE = `${PREFIX}v3`;
 const SHELL = ['', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'capture-worklet.js'].map(path => BASE + path);
 self.addEventListener('install', event => event.waitUntil((async () => {
   const cache = await caches.open(CACHE);

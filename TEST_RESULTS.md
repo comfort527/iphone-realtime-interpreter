@@ -1,5 +1,7 @@
 # 第一版驗證紀錄
 
+2026-09-14 介面精簡：移除常駐版本／標籤／重複文字，設定與 Mock 控制改為折疊，主要動作隨狀態顯示。TypeScript／Vite 建置、Mock 瀏覽器流程、後端／離線 PWA、Pages 子路徑測試通過。已檢視 390 × 844 截圖 `test-results/ui-simplified.png`。Speaker Gate、400 ms COOLDOWN 與私人輸出規則維持不變。
+
 驗證日期：2026-09-13。環境：Windows、Node.js 24.19.0、TypeScript 5.9.3、Vite 7.3.6、Playwright 1.63.0、桌面 Microsoft Edge（390 × 844 手機 viewport）。
 
 ## 已執行並通過

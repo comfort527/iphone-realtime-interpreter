@@ -5,6 +5,8 @@ try {
   const context = await browser.newContext({ permissions: ['microphone'] }); const page = await context.newPage();
   const errors = []; page.on('pageerror', e => errors.push(e.message));
   await page.goto('http://localhost:5173/');
+  await page.locator('#settingsPanel > summary').click();
+  await page.locator('#mockPanel > summary').click();
   for (const kind of ['openai', 'gemini']) {
     const r = await page.evaluate(async kind => {
       const response = await fetch(`/api/session/${kind}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ foreignLanguage: 'en-US' }) });
@@ -27,6 +29,7 @@ try {
     if (!requests.some(r => /\/assets\/.*\.js$/.test(r.url))) throw new Error('JS was not precached');
   });
   await page.reload(); await context.setOffline(true); await page.reload();
+  await page.locator('#mockPanel > summary').click();
   await page.locator('#start').waitFor(); assert.equal(await page.locator('#provider').inputValue(), 'mock');
   await page.locator('#start').click(); await page.locator('#stateCode').filter({ hasText: /^LISTENING$/ }).waitFor();
   await page.locator('#demoForeign').click(); await page.locator('#chineseTranslation').filter({ hasText: /明天/ }).waitFor();

@@ -17,6 +17,9 @@ const state = async s => { await page.locator('#stateCode').filter({ hasText: ne
 const stats = async () => JSON.parse(await page.locator('#stats').textContent());
 try {
   await page.goto('http://localhost:5173/?debug=1');
+  await page.locator('#settingsPanel > summary').click();
+  await page.locator('#mockPanel > summary').click();
+  await page.locator('#mockAdvanced > summary').click();
   await page.locator('#debug').evaluate(e => e.open = true);
   await page.locator('#publicRoute').check(); await page.locator('#simulatePrivate').check();
   await page.locator('#start').click(); await state('LISTENING');
